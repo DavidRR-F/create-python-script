@@ -12,7 +12,7 @@ setup(
         description=DESCRIPTION,
         long_description=LONG_DESCRIPTION,
         packages=find_packages(),
-        install_requires=['click'],
+        install_requires=['click', 'questionary'],
         keywords=['create', 'command'],
         classifiers= [
             "Development Status :: 3 - Alpha",
@@ -20,8 +20,9 @@ setup(
             "Programming Language :: Python :: 3+",
             "Operating System :: Microsoft :: Windows",
         ],
-        entry_points='''
-        [console_scripts]
-        create-python-project=create-python-project.project_generator:create_python_project
-    ''',
+        entry_points={
+            'console_scripts': [
+                'create-python-project=create_python_project.project_generator:create_python_project',
+            ],
+        },
 )
