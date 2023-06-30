@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 VERSION = '0.0.1' 
 DESCRIPTION = 'Create Python Script CLI'
@@ -11,8 +11,8 @@ setup(
         author_email="david.rosefranklin96@gmail.com",
         description=DESCRIPTION,
         long_description=LONG_DESCRIPTION,
-        packages=['create-script'],
-        install_requires=[],
+        packages=find_packages(),
+        install_requires=['click'],
         keywords=['create', 'command'],
         classifiers= [
             "Development Status :: 3 - Alpha",
@@ -20,7 +20,8 @@ setup(
             "Programming Language :: Python :: 3+",
             "Operating System :: Microsoft :: Windows",
         ],
-        entry_points={
-        "console_scripts": ["create-python-script=create-script.cli:main"]
-        },
+        entry_points='''
+        [console_scripts]
+        create-python-project=create-python-project.project_generator:create_python_project
+    ''',
 )
