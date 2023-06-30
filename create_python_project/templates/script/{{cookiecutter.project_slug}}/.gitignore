@@ -1,60 +1,4 @@
-SCRIPT_MAIN = """from dotenv import load_dotenv
-import os
-
-load_env()
-
-def main():
-    print(os.getenv("YOUR_SECRET"))
-
-if __name__ == "__main__":
-    main()
-    """
-TEST_UNITTEST = """import unittest
-
-class YourTestCase(unittest.TestCase):
-    def setUp(self):
-        pass
-    
-    def test_yourcode(self):
-        pass
-    """
-SCRIPT_README = """# Python Scripting
-
-## Get Started
-
-### install dev dependencies
-```
-$ pip install -r requirements.dev.txt
-```
-
-### run formatting
-```
-$ black . -v
-```
-
-### run linting
-```
-$ flake8
-```
-
-### run unit tests
-```
-$ python -m unittest discover test
-```
-    """
-FLAKE = """# Exclude files from linting
-[flake8]
-exclude = 
-    __pycache__,
-    .venv
-ignore =
-    E251,
-    E302,
-    W291,
-    W292,
-    W293
-    """
-IGNORE = """# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -186,5 +130,4 @@ dmypy.json
 
 # Vscode
 .vscode
-    """
     

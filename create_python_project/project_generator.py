@@ -1,8 +1,8 @@
 import re
 import os
+from cookiecutter.main import cookiecutter
 import click
 import questionary
-from .constants import *
 
 class QuestionaryOption(click.Option):
 
@@ -31,28 +31,10 @@ def create_python_project(name: str, type: str):
     os.makedirs(name, exist_ok=True)
     os.chdir(name)
 
-    # Generate Files
-    if type.lower() == 'script':
-        os.makedirs('script', exist_ok=True)
-        with open('script/main.py', 'w') as f:
-            f.write(SCRIPT_MAIN)
-        os.makedirs('tests', exist_ok=True)
-        with open('tests/test.py', 'w') as f:
-            f.write(TEST_UNITTEST)
-        with open('.flake8', 'w') as f:
-            f.write(FLAKE)
-        with open('.gitignore', 'w') as f:
-            f.write(IGNORE)
-        with open('README.md', 'w') as f:
-            f.write(SCRIPT_README)
-        with open('requirements.dev.txt', 'w') as f:
-            f.write("flake8\n") 
-        with open('requirements.txt', 'w') as f:
-            f.write("python-dotenv\n") 
-        
-    elif type.lower() == 'api':
-        print('Under construction come back later')
+    current_script_dir = os.path.dirname(os.path.abspath(__file__))
+    templates_dir = os.path.join(current_script_dir, 'templates')
 
-        
+    cookiecutter(f'{templates_dir}/{type.lower()}', no_input=True, extra_context={'project_slug': name})
+
 if __name__ == '__main__':
     create_python_project()

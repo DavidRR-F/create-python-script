@@ -1,0 +1,12 @@
+# Exclude files from linting
+[flake8]
+exclude = 
+    __pycache__,
+    .venv
+ignore =
+    E251,
+    E302,
+    W291,
+    W292,
+    W293
+    
