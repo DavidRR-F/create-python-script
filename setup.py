@@ -22,7 +22,7 @@ setup(
         ],
         entry_points={
             'console_scripts': [
-                'create-python-project=create_python_project.project_generator:create_python_project',
+                'pyplater=create_python_project.project_generator:create_python_project',
             ],
         },
 )

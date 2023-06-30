@@ -1,23 +1,23 @@
-# Create Python Script Package
-Generates boilerplate structure for python scripts Including linting, formatting, and unit testing
+# PyPlater
+
+Generates boilerplate structure for python project Including linting, formatting, and unit testing
 
 ## Get Setup
 
 ### Install Package
+
 ```
-$ pip install create-python-script
+$ pip install pyplater
 ```
 
 ### Create python project in new or current directory
+
 ```
-$ create-python-script <project-name>
-
-or 
-
-$ create-python-script
+$ pyplater --name my-project --type script
 ```
 
 ## File Structure
+
 ```
 your_project/
     ├── .venv/
@@ -29,7 +29,6 @@ your_project/
     ├── .env
     ├── .flake8
     ├── .gitignore
-    ├── pyproject.toml
     ├── requirements.txt
     ├── requirements.dev.txt
     └── README.md
@@ -37,7 +36,7 @@ your_project/
 
 ## Default Library Configuration
 
-- ***Linting:*** Flake8
-- ***Formatting:*** Black
-- ***Enviroment:*** Dotenv
-- ***Testing:*** Unittest
+- **_Linting:_** Flake8
+- **_Formatting:_** Black
+- **_Enviroment:_** Dotenv
+- **_Testing:_** Unittest

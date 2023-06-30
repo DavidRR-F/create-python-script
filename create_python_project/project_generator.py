@@ -17,15 +17,15 @@ class QuestionaryOption(click.Option):
     
 def validate_project_name(ctx, param, value):
     pattern = r'^[a-zA-Z0-9_-]+$'
-    if not re.match(pattern, value):
+    if value is not None and not re.match(pattern, value):
         raise click.BadParameter('Project name must contain only alphanumeric characters, hyphens or underscores.')
     return value
 
 @click.command()
-@click.echo(click.style('Create Python Project 🐍 (Alpha)', fg='cyan', bold=True, underline=True))
-@click.option('--name', prompt="Enter Project Name:")
+#@click.echo(click.style('Create Python Project 🐍 (Alpha)', fg='cyan', bold=True, underline=True))
+@click.option('--name', prompt="Enter Project Name", callback=validate_project_name, is_eager=True)
 @click.option('--type', prompt='type', type=click.Choice(['Script','API'], case_sensitive=False), cls=QuestionaryOption)
-def create_python_project(name: str, type: str) -> None:
+def create_python_project(name: str, type: str):
 
     # Create new Directory
     os.makedirs(name, exist_ok=True)
