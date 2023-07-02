@@ -1,5 +1,10 @@
 # {{cookiecutter.project_slug}} Generated with PyPlater
 
+<div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+<img src="https://davidrr-f.github.io/codepen-hosted-assets/pyplater.svg" alt="My logo" width="140" height="140">
+<h2 style="font-size: 8rem; color: linear-gradient(from right, #7f9bdd, #11171c);">PyPlater</h2>
+</div>
+
 ## Get Started
 
 ### <img src="https://python-poetry.org/images/logo-origami.svg" alt="My logo" width="16" height="16"> Poetry Package Manager
