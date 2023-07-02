@@ -1,0 +1,7 @@
+[pyplater.scripts]
+script = "python ./script/main.py"
+test = "python -m unittest discover test"
+lint = "flake8"
+format = "black . -v"
+create-venv = "python -m venv .venv"
+activate-venv = "source .venv/Scripts/activate"

@@ -32,7 +32,7 @@ $ pip install pyplater
 ### Create python project in new or current directory
 
 ```
-$ pyplater --name my-project --type script
+$ pyplater create --name my-project --type script
 ```
 
 ## File Structure
@@ -40,6 +40,7 @@ $ pyplater --name my-project --type script
 ```
 your_project/
     ├── script/
+        ├── __init__.py
         └── main.py
     ├── test/
         ├── __init__.py
@@ -49,6 +50,19 @@ your_project/
     ├── .gitignore
     ├── pyproject.toml
     └── README.md
+```
+
+## Run custom commands
+
+```
+$ pyplater run script
+```
+
+## pyproject.toml
+
+```
+[pyplater.scripts]
+script = "python ./script/main.py"
 ```
 
 ## Default Library Configuration

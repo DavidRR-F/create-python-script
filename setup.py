@@ -12,7 +12,7 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     packages=find_packages(),
-    install_requires=['click', 'questionary', 'cookiecutter'],
+    install_requires=['click', 'questionary', 'cookiecutter', 'toml'],
     keywords=['create', 'command'],
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -22,7 +22,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'pyplater=create_python_project.project_generator:create_python_project',
+            'pyplater=pyplater.cli:pyplater',
         ],
     },
 )

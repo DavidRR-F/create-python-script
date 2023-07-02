@@ -1,5 +1,7 @@
 import re
 import os
+import toml
+import subprocess
 from cookiecutter.main import cookiecutter
 import click
 import questionary
@@ -23,16 +25,39 @@ def validate_project_name(ctx, param, value):
         raise click.BadParameter('Project name must contain only alphanumeric characters, hyphens or underscores.')
     return value
 
-@click.command()
+@click.group()
+def pyplater():
+    pass
+
+@pyplater.command()
 #@click.echo(click.style('PyPlater 🐍 (Alpha)', fg='cyan', bold=True, underline=True))
 @click.option('--name', prompt="Enter Project Name", callback=validate_project_name, is_eager=True)
 @click.option('--type', prompt='type', type=click.Choice(project_options, case_sensitive=False), cls=QuestionaryOption)
-def create_python_project(name: str, type: str):
+def create(name: str, type: str):
 
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
     templates_dir = os.path.join(current_script_dir, 'templates')
 
     cookiecutter(f'{templates_dir}/{type.lower()}', no_input=True, extra_context={'project_slug': name})
 
+@pyplater.command()
+@click.argument('script_name')
+def run(script_name):
+    # Load the pyproject.toml file
+    pyproject = toml.load('pyproject.toml')
+
+    # Get the script command
+    script_command: str = pyproject.get('pyplater', {}).get('scripts', {}).get(script_name)
+
+    if script_command is None:
+        click.echo(f"No script named '{script_name}' found in pyproject.toml.")
+        return
+
+    # Parse the command
+    command: list = script_command.split(' ')
+
+    # Execute the command
+    subprocess.run(command)
+
 if __name__ == '__main__':
-    create_python_project()
+    pyplater()
