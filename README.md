@@ -20,8 +20,7 @@ $ pyplater --name my-project --type script
 
 ```
 your_project/
-    ├── .venv/
-    ├── scripts/
+    ├── script/
         └── main.py
     ├── test/
         ├── __init__.py
@@ -29,8 +28,7 @@ your_project/
     ├── .env
     ├── .flake8
     ├── .gitignore
-    ├── requirements.txt
-    ├── requirements.dev.txt
+    ├── pyproject.toml
     └── README.md
 ```
 

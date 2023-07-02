@@ -3,9 +3,8 @@ import os
 from cookiecutter.main import cookiecutter
 import click
 import questionary
-import toml
 
-project_options = ['Script', 'API', 'Model', 'Data']
+project_options = ['Script', 'API']
 
 class QuestionaryOption(click.Option):
 
@@ -30,24 +29,10 @@ def validate_project_name(ctx, param, value):
 @click.option('--type', prompt='type', type=click.Choice(project_options, case_sensitive=False), cls=QuestionaryOption)
 def create_python_project(name: str, type: str):
 
-    # Create new Directory
-    os.makedirs(name, exist_ok=True)
-    os.chdir(name)
-
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
     templates_dir = os.path.join(current_script_dir, 'templates')
 
     cookiecutter(f'{templates_dir}/{type.lower()}', no_input=True, extra_context={'project_slug': name})
-
-    # Update pyproject.toml
-    pyproject_dict = toml.load('pyproject.toml')
-
-    # Edit the 'name' under 'tool.poetry'
-    pyproject_dict['tool']['poetry']['name'] = name
-
-    # Write the changes back to the pyproject.toml file
-    with open('pyproject.toml', 'w') as f:
-        toml.dump(pyproject_dict, f)
 
 if __name__ == '__main__':
     create_python_project()
