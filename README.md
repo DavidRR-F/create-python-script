@@ -2,6 +2,9 @@
 <img src="https://davidrr-f.github.io/codepen-hosted-assets/pyplater.svg" alt="My logo" width="140" height="140">
 <h2 style="font-size: 8rem; color: #3a73e3">PyPlater</h2>
 </div>
+
+**_in development_**
+
 <!-- for reference when published -->
 <!-- <p align="center">
 <a href="https://github.com/tiangolo/fastapi/actions?query=workflow%3ATest+event%3Apush+branch%3Amaster" target="_blank">
@@ -21,6 +24,22 @@
 PyPlater is a Python CLI Tool to generates boilerplate code for python projects Including linting, formatting, unit testing, and package managing for
 a variety of templates.
 
+# Project Choices
+
+## Templates
+
+Script, Flask, FastAPI, DataMining
+
+## Package Managers
+
+Pip, SetupTools, Pipenv, Poetry
+
+## Tests
+
+Unittest, PyTest
+
+##
+
 # Get Setup
 
 ### Install PyPlater
@@ -29,10 +48,12 @@ a variety of templates.
 $ pip install pyplater
 ```
 
+## Examples
+
 ### Create python project in new or current directory
 
 ```
-$ pyplater create --name my-project --type script
+$ pyplater create --name my-project --type script --pm poetry --linter flake8
 ```
 
 ## File Structure
@@ -55,6 +76,7 @@ your_project/
 ## Run custom commands
 
 ```
+$ pyplater run install
 $ pyplater run script
 ```
 
@@ -62,7 +84,8 @@ $ pyplater run script
 
 ```
 [pyplater.scripts]
-script = "python ./script/main.py"
+script = "poetry run python ./script/main.py"
+install = "poetry install"
 ```
 
 ## Default Library Configuration

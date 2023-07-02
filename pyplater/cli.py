@@ -6,7 +6,7 @@ from cookiecutter.main import cookiecutter
 import click
 import questionary
 
-project_options = ['Script', 'API']
+project_options = ['Scripting', 'Data Science', 'Flask', 'FastAPI']
 
 class QuestionaryOption(click.Option):
 
@@ -39,10 +39,10 @@ def create(name: str, type: str):
     templates_dir = os.path.join(current_script_dir, 'templates')
 
     # To Do
-    # Linter Option
-    # Formatter Option
-    # Package Manager Option
+    # Package Manager Option (Pip, Poetry, Pipenv)
+    # Tests Options (Unittest, PyTest)
     # API cookiecutter Flask/FastAPI
+    # ORM Options (Pydantic, SQLAlchemy)
 
     cookiecutter(f'{templates_dir}/{type.lower()}', no_input=True, extra_context={'project_slug': name})
 
