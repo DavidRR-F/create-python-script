@@ -38,6 +38,12 @@ def create(name: str, type: str):
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
     templates_dir = os.path.join(current_script_dir, 'templates')
 
+    # To Do
+    # Linter Option
+    # Formatter Option
+    # Package Manager Option
+    # API cookiecutter Flask/FastAPI
+
     cookiecutter(f'{templates_dir}/{type.lower()}', no_input=True, extra_context={'project_slug': name})
 
 @pyplater.command()
