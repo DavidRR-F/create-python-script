@@ -37,26 +37,67 @@ a variety of templates.
 $ pip install pyplater
 ```
 
-## Commands
+# Commands
 
 ## PyPlater Create
+
+![Alt text](image.png)
+
+### Options
+
+- --name: Project Name
+- --type: Project Template
+- --tester: Unit Testing Library
+- --manager: Package Manager
+- --orm: Database ORM Library
+
+## Examples
 
 ### Create Vanilla Project
 
 ```
-$ pyplater create --name my-project --type vanilla --manager poetry --orm sqlalchemy
+$ pyplater create --name your_project --type vanilla --tester unittest --manager pip --orm none
 ```
 
-## File Structure
+### File Structure
 
 ```
 your_project/
     ├── your_project/
+        ├── test/
+            ├── __init__.py
+            └── test.py
+        ├── __init__.py
+        ├── config.py
+        └── main.py
+    ├── .env.example
+    ├── .flake8
+    ├── .gitignore
+    ├── pyproject.toml
+    ├── requirements.txt
+    ├── requirements.dev.txt
+    └── README.md
+```
+
+### Create FastAPI Project
+
+```
+$ pyplater create --name your_project --type fastapi --tester pytest --manager poetry --orm sqlalchemy
+```
+
+### File Structure
+
+```
+your_project/
+    ├── app/
+        ├── router/
+            ├── auth.py
+            ├── post.py
         ├── db/
             ├── database.py
+            ├── shcema.py
             ├── crud.py
-            ├── schema.py
-            └── models.py
+            └── model.py
         ├── test/
             ├── __init__.py
             └── test.py
@@ -70,7 +111,20 @@ your_project/
     └── README.md
 ```
 
-## Run custom commands
+## PyPlater Add
+
+Add subdirectory file structture to the cwd using pyplater
+
+![Alt text](image-1.png)
+
+### Options
+
+- [CONTENT]: [tester, manager, orm]
+- --option: Library for the chosen content
+
+## PyPlater Run
+
+Define commands in the pyproject.toml to run your custom scripts with pyplater
 
 ```
 $ pyplater run install
@@ -89,5 +143,4 @@ install = "poetry install"
 
 - **_Linting:_** Flake8
 - **_Formatting:_** Black
-- **_Enviroment:_** Dotenv
-- **_Testing:_** Unittest
+- **_Enviroment:_** Settings config w/ pydantic
