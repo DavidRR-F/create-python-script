@@ -12,10 +12,11 @@ project_options = ['Vanilla', 'FastAPI']
 manager_options = ['PIP', 'Poetry']
 tester_options = ['Unittest', 'PyTest']
 add_options = ['tester', 'manager']
-orm_options = ['SqlAlchemy']
+orm_options = ['None','SqlAlchemy']
 options = {
     'tester': ['pip', 'poetry'],
-    'manager': ['unittest', 'pytest']
+    'manager': ['unittest', 'pytest'],
+    'orm': ['sqlalchemy']
 }
 
 class QuestionaryInput(click.Option):
@@ -51,20 +52,19 @@ def validate_project_name(ctx, param, value):
         raise click.BadParameter('Project name must contain only alphanumeric characters, hyphens or underscores.')
     return value
 
-def add_supporting_files(path, context):
+def add_supporting_files(path, context, root=None):
     for file in os.listdir(path):
         if os.path.isdir(os.path.join(path, file)):
             os.mkdir(file)
-            add_supporting_files(f"{path}/{file}", context)
+            add_supporting_files(f"{path}/{file}", context, file)
         else:
             with open(f'{path}/{file}', 'r') as f:
                 template = f.read()
 
             for key, value in context.items():
                 rendered_template = template.replace('{{' + key + '}}', value)
-
-            # Write the rendered template to a file
-            with open(f'{path}/{file}', 'w') as f:
+            
+            with open(f"{root}/{file}" if root else file, 'w') as f:
                 f.write(rendered_template)
 
 @click.group()
@@ -72,15 +72,12 @@ def pyplater():
     pass
 
 @pyplater.command()
-@click.argument('name', prompt="Enter Project Name", callback=validate_project_name, is_eager=True, cls=QuestionaryInput)
+@click.option('--name', prompt="Enter Project Name", callback=validate_project_name, is_eager=True, cls=QuestionaryInput)
 @click.option('--type', prompt='type', type=click.Choice(project_options, case_sensitive=False), cls=QuestionaryOption)
 @click.option('--tester', prompt='tester', type=click.Choice(tester_options, case_sensitive=False), cls=QuestionaryOption)
 @click.option('--manager', prompt='manager', type=click.Choice(manager_options, case_sensitive=False), cls=QuestionaryOption)
-@click.optiion('--orm')
-def create(name: str, type: str, manager: str, tester: str, orm: str = None) -> None:
-
-    if type.lower() == 'fastapi' and not orm:
-        orm = click.prompt(prompt="orm", type=click.Choice(orm_options, case_sensitive=False), cls=QuestionaryOption)
+@click.option('--orm', prompt='orm', type=click.Choice(orm_options, case_sensitive=False), cls=QuestionaryOption)
+def create(name: str, type: str, manager: str, tester: str, orm: str) -> None:
 
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
     templates_dir = os.path.join(current_script_dir, 'templates')
@@ -92,23 +89,21 @@ def create(name: str, type: str, manager: str, tester: str, orm: str = None) -> 
 
     add_supporting_files(f'{templates_dir}/manager/{manager.lower()}', context)
 
-    # Tester
-    if type.lower() == 'fastapi':
-        os.chdir("app")
-    else:
+    if type.lower() == 'vanilla':
         os.chdir(context['project_slug'])
+    else:
+        os.chdir('app')
     
     add_supporting_files(f'{templates_dir}/tester/{tester.lower()}', context)
 
     # ORM
-    if orm:
+    if orm != 'None':
         add_supporting_files(f'{templates_dir}/orm/{orm.lower()}', context)
 
 @pyplater.command()
 @click.argument('content')
-@click.argument('file')
 @click.option('--option')
-def add(content, file='', option=None):
+def add(content, option=None):
     if content not in add_options:
         raise click.BadParameter(f'Invalid name. Valid names are: {", ".join(add_options)}.')
     
@@ -116,11 +111,11 @@ def add(content, file='', option=None):
         raise click.BadParameter(f'Invalid option. Valid options for {content} are: {", ".join(options[content])}.')
     
     if not option:
-        option = click.prompt(prompt=content, type=click.Choice(options[content], case_sensitive=False), cls=QuestionaryOption)
+        option = click.prompt(f"Select Option", type=click.Choice(options[content], case_sensitive=False), cls=QuestionaryOption)
 
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
     templates_dir = os.path.join(current_script_dir, 'templates')
-    context = {'project_slug': os.path.basename(os.getcwd())+file }
+    context = {'project_slug': os.path.basename(os.getcwd()) }
 
     add_supporting_files(f'{templates_dir}/{content}/{option}', context)
     
