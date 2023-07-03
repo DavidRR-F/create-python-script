@@ -7,7 +7,24 @@ import click
 import questionary
 
 project_options = ['Scripting', 'Data Science', 'Flask', 'FastAPI']
+manager_options = ['PIP', 'Poetry']
 
+class QuestionaryInput(click.Option):
+    def __init__(self, param_decls=None, **attrs):
+        click.Option.__init__(self, param_decls, **attrs)
+
+    def prompt_for_value(self, ctx):
+        val = questionary.text(self.prompt).ask()
+        return val
+    
+class QuestionaryConfirm(click.Option):
+    def __init__(self, param_decls=None, **attrs):
+        click.Option.__init__(self, param_decls, **attrs)
+
+    def prompt_for_value(self, ctx):
+        val = questionary.confirm(self.prompt).ask()
+        return val    
+    
 class QuestionaryOption(click.Option):
 
     def __init__(self, param_decls=None, **attrs):
@@ -25,26 +42,42 @@ def validate_project_name(ctx, param, value):
         raise click.BadParameter('Project name must contain only alphanumeric characters, hyphens or underscores.')
     return value
 
+def add_supporting_files(path, context):
+    for file in os.listdir(path):
+        with open(f'{path}/{file}', 'r') as f:
+            template = f.read()
+
+        for key, value in context.items():
+            rendered_template = template.replace('{{' + key + '}}', value)
+
+        # Write the rendered template to a file
+        with open(f'{context["project_slug"]}/{file}', 'w') as f:
+            f.write(rendered_template)
+
 @click.group()
 def pyplater():
     pass
 
 @pyplater.command()
 #@click.echo(click.style('PyPlater 🐍 (Alpha)', fg='cyan', bold=True, underline=True))
-@click.option('--name', prompt="Enter Project Name", callback=validate_project_name, is_eager=True)
+@click.option('--name', prompt="Enter Project Name", callback=validate_project_name, is_eager=True, cls=QuestionaryInput)
 @click.option('--type', prompt='type', type=click.Choice(project_options, case_sensitive=False), cls=QuestionaryOption)
-def create(name: str, type: str):
+@click.option('--manager', prompt='manager', type=click.Choice(manager_options, case_sensitive=False), cls=QuestionaryOption)
+def create(name: str, type: str, manager: str):
 
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
     templates_dir = os.path.join(current_script_dir, 'templates')
+    context = {'project_slug': name }
+
+    cookiecutter(f'{templates_dir}/base/{type.lower()}', no_input=True, extra_context=context)
+
+    # Manager
+    add_supporting_files(f'{templates_dir}/manager/{type.lower()}/{manager.lower()}', context)
 
     # To Do
-    # Package Manager Option (Pip, Poetry, Pipenv)
     # Tests Options (Unittest, PyTest)
     # API cookiecutter Flask/FastAPI
     # ORM Options (Pydantic, SQLAlchemy)
-
-    cookiecutter(f'{templates_dir}/{type.lower()}', no_input=True, extra_context={'project_slug': name})
 
 @pyplater.command()
 @click.argument('script_name')
