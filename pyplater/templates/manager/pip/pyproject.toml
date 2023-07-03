@@ -1,6 +1,6 @@
 [pyplater.scripts]
 script = "python ./script/main.py"
-test = "python -m unittest discover test"
+test = "python -m unittest discover tests"
 lint = "flake8"
 format = "black . -v"
 install = "pip install -r requirements.txt"

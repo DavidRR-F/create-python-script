@@ -14,14 +14,15 @@ python-dotenv = "1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "6.0.0"
+black = "23.3.0"
 
 [build]
 include = ["script/**/*.py"]
 
 [pyplater.scripts]
 script = "poetry run python ./script/main.py"
-test = "poetry run python -m unittest discover test"
+test = "poetry run python -m unittest discover tests"
 lint = "poetry run flake8"
 format = "poetry run black . -v"
 install = "poetry install"
-install-dev = "peotry install group -dev"
+install-dev = "poetry install group -dev"
