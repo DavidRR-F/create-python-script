@@ -20,7 +20,7 @@
 </a>
 </p> -->
 
-PyPlater is a Python CLI Tool to generates boilerplate code for python projects Including linting, formatting, unit testing, and package managing for
+PyPlater is a Python CLI Tool to generate, build, and create boilerplate code for python projects Including linting, formatting, unit testing, and package managing for
 a variety of templates.
 
 # Project Options

@@ -1,6 +1,8 @@
 import re
 import os
 import toml
+import shutil
+import json
 import subprocess
 from cookiecutter.main import cookiecutter
 import click
@@ -67,8 +69,38 @@ def add_supporting_files(path, context, root=None):
             with open(f"{root}/{file}" if root else file, 'w') as f:
                 f.write(rendered_template)
 
+def get_custom_templates() -> list:
+    current_script_dir = os.path.dirname(os.path.abspath(__file__))
+    templates_dir = os.path.join(current_script_dir, 'templates/custom')
+    return os.listdir(templates_dir)
+
 @click.group()
 def pyplater():
+    pass
+
+@pyplater.command()
+@click.argument('dir')
+@click.argument('name')
+def save(dir, name):
+    current_script_dir = os.path.dirname(os.path.abspath(__file__))
+    templates_dir = os.path.join(current_script_dir, 'templates/custom')
+    os.mkdir(f'{templates_dir}/{name}')
+    templates_dir = os.path.join(templates_dir, name)
+    shutil.copytree(dir, f'{templates_dir}/{name}')
+    with open(f'{templates_dir}/cookiecutter.json', 'w') as f:
+        json.dump({'project_slug': 'default_project'}, f)
+    os.rename(f'{templates_dir}/{name}', templates_dir+'/{{cookiecutter.project_slug}}')
+    print(f'{name} has been created as a template')
+
+@pyplater.command()
+@click.option('--name', prompt="Enter Project Name", callback=validate_project_name, is_eager=True, cls=QuestionaryInput)
+@click.option('--template', prompt="template", type=click.Choice(get_custom_templates, case_sensitive=False), cls=QuestionaryOption)
+def custom():
+    pass
+
+@pyplater.command()
+@click.option('--templates')
+def view():
     pass
 
 @pyplater.command()
