@@ -11,11 +11,11 @@ project_options = ['Vanilla', 'FastAPI']
 # add setuptools and pipenv templates
 manager_options = ['PIP', 'Poetry']
 tester_options = ['Unittest', 'PyTest']
-add_options = ['tester', 'manager']
+add_options = ['orm', 'tester', 'manager']
 orm_options = ['None','SqlAlchemy']
 options = {
-    'tester': ['pip', 'poetry'],
-    'manager': ['unittest', 'pytest'],
+    'tester': ['unittest', 'pytest'],
+    'manager': ['pip', 'poetry'],
     'orm': ['sqlalchemy']
 }
 
@@ -111,7 +111,7 @@ def add(content, option=None):
         raise click.BadParameter(f'Invalid option. Valid options for {content} are: {", ".join(options[content])}.')
     
     if not option:
-        option = click.prompt(f"Select Option", type=click.Choice(options[content], case_sensitive=False), cls=QuestionaryOption)
+        option = questionary.select(f"Choose Option:", choices=options[content]).unsafe_ask()
 
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
     templates_dir = os.path.join(current_script_dir, 'templates')

@@ -23,21 +23,11 @@
 PyPlater is a Python CLI Tool to generates boilerplate code for python projects Including linting, formatting, unit testing, and package managing for
 a variety of templates.
 
-# Project Choices
+# Project Options
 
-## Templates
-
-Script, Flask, FastAPI, DataMining
-
-## Package Managers
-
-Pip, SetupTools, Pipenv, Poetry
-
-## Tests
-
-Unittest, PyTest
-
-##
+|    Templates     |     Testing      | Package Managers |    ORMs    |
+| :--------------: | :--------------: | :--------------: | :--------: |
+| Vanilla, FastAPI | Unittest, PyTest |   PIP, Poetry    | SqlAlchemy |
 
 # Get Setup
 
@@ -47,25 +37,33 @@ Unittest, PyTest
 $ pip install pyplater
 ```
 
-## Examples
+## Commands
 
-### Create python project in new or current directory
+## PyPlater Create
+
+### Create Vanilla Project
 
 ```
-$ pyplater create --name my-project --type script --pm poetry --linter flake8
+$ pyplater create --name my-project --type vanilla --manager poetry --orm sqlalchemy
 ```
 
 ## File Structure
 
 ```
 your_project/
-    ├── script/
+    ├── your_project/
+        ├── db/
+            ├── database.py
+            ├── crud.py
+            ├── schema.py
+            └── models.py
+        ├── test/
+            ├── __init__.py
+            └── test.py
         ├── __init__.py
+        ├── config.py
         └── main.py
-    ├── test/
-        ├── __init__.py
-        └── test.py
-    ├── .env
+    ├── .env.example
     ├── .flake8
     ├── .gitignore
     ├── pyproject.toml
