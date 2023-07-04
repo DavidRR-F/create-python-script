@@ -9,39 +9,50 @@
 ## <img src="https://python-poetry.org/images/logo-origami.svg" alt="My logo" width="16" height="16"> Poetry Package Manager
 
 Poetry is a python package management tool that creates a better development for the python ecosystem. If you are not familiar with the package you can refer to the [documentation](https://python-poetry.org/docs/).
+**_This template is generated with poetry configured_**
 
 ```
 pip install poetry
 ```
 
-## Commands
+## Pyplater Run Commands
+
+**_These are the preconfigured commands defined for this template_**
 
 ### Install Dependencies
 
 ```
-$ poetry install
+$ pyplater install
+$ pyplater instell-dev
 ```
 
 ### Run Script
 
 ```
-$ poetry run script
+$ pyplater run script
 ```
 
 ### Run Tests
 
 ```
-$ poetry run test
+$ pyplater run test
+```
+
+### Code Coverage
+
+```
+$ pyplater run coverage
+$ pyplater run report
 ```
 
 ### Formatting
 
 ```
-$ black . -v
+$ pyplater run format
 ```
 
 ### Linting
 
 ```
-$ flake8
+$ pyplater run lint
 ```
