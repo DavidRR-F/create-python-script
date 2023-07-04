@@ -1,0 +1,9 @@
+[pyplater.scripts]
+script = "python ./script/main.py"
+test = "python -m unittest discover tests"
+lint = "flake8"
+format = "black . -v"
+install = "pip install -r requirements.txt"
+install-dev = "pip install -r requirements.dev.txt"
+create-venv = "python -m venv .venv"
+activate-venv = "source .venv/Scripts/activate"

@@ -1,8 +1,7 @@
 # {{cookiecutter.project_slug}}
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-<img src="https://davidrr-f.github.io/codepen-hosted-assets/pyplater.svg" alt="My logo" width="140" height="140">
-<h2 style="font-size: 8rem; color: #3a73e3">PyPlater</h2>
+<img src="https://davidrr-f.github.io/codepen-hosted-assets/pyplater-banner.svg" alt="My logo" width="900" height="300">
 </div>
 
 # Get Started
@@ -22,10 +21,6 @@ pip install poetry
 ```
 $ poetry install
 ```
-
-<div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-<img src="https://davidrr-f.github.io/codepen-hosted-assets/pyplater-banner.svg" alt="My logo" width="900" height="300">
-</div>
 
 ### Run Script
 
