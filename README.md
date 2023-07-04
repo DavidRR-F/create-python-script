@@ -32,10 +32,6 @@ $ pip install pyplater
 
 # Commands
 
-```
-$ pyplater save ./your_project newTemplate --type template
-```
-
 ## PyPlater Create
 
 [![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.gif)
@@ -45,7 +41,7 @@ $ pyplater save ./your_project newTemplate --type template
 - --name: Project Name
 - --template: Project Template
 
-## Example
+### Example
 
 ```
 $ pyplater create --name your_project --type starter
@@ -63,6 +59,12 @@ Save project directorys as snippets or templates
 - [Name]: the name of the new template/snippet
 - --type: (template, snippet)
 
+### Example
+
+```
+$ pyplater save ./your_project newTemplate --type template
+```
+
 ## PyPlater Add
 
 Add snippet files to existing projects
@@ -73,7 +75,13 @@ Add snippet files to existing projects
 
 - --snippet: Library for the chosen content
 
-## Starter Snippets
+### Example
+
+```
+$ pyplater add --snippet pytest
+```
+
+### Starter Snippets
 
 - pytest
 - unittest
@@ -85,7 +93,20 @@ Add snippet files to existing projects
 
 View all saved snippets/templates or view a specific snippet's/template's file structure
 
-[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.gif)
+[![PyPlater View](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.gif)
+
+### Options
+
+- [Type]: (snippets, templates)
+- --name: specific tamplate or snippet
+
+### Examples
+
+```
+$ pyplater view snippets
+
+$ pyplater view templates --name your_project
+```
 
 ## PyPlater Run
 
@@ -102,4 +123,19 @@ $ pyplater run test
 [pyplater.scripts]
 script = "python ./main/script/main.py"
 test = "python -m unittest:discover tests/"
+```
+
+## PyPlater Remove
+
+Remove Templates and/or Snippets from your device
+
+### Options
+
+- [Name]: name of the template/snippet
+- --type: (template, snippet)
+
+### Example
+
+```
+$ pyplater remove your_project --type template
 ```
