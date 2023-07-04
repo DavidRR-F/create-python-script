@@ -38,7 +38,7 @@ $ pyplater save ./your_project newTemplate --type template
 
 ## PyPlater Create
 
-[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.mp4)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.mp4)
+[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.gif)
 
 ### Options
 
@@ -55,7 +55,7 @@ $ pyplater create --name your_project --type starter
 
 Save project directorys as snippets or templates
 
-[![PyPlater Save](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/save.mp4)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/save.mp4)
+[![PyPlater Save](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/save.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/save.gif)
 
 ### Options
 
@@ -67,7 +67,7 @@ Save project directorys as snippets or templates
 
 Add snippet files to existing projects
 
-[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/add.mp4)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/add.mp4)
+[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/add.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/add.gif)
 
 ### Options
 
@@ -85,7 +85,7 @@ Add snippet files to existing projects
 
 View all saved snippets/templates or view a specific snippet's/template's file structure
 
-[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.mp4)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.mp4)
+[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.gif)
 
 ## PyPlater Run
 
