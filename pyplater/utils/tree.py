@@ -30,17 +30,17 @@ class DisplayablePath(object):
         yield displayable_root
 
         children = sorted(list(path
-                               for path in root.iterdir()
-                               if criteria(path)),
-                          key=lambda s: str(s).lower())
+                            for path in root.iterdir()
+                            if criteria(path)),
+                        key=lambda s: (not s.is_dir(), str(s).lower()))  # Sort directories first, then files
         count = 1
         for path in children:
             is_last = count == len(children)
             if path.is_dir():
                 yield from cls.make_tree(path,
-                                         parent=displayable_root,
-                                         is_last=is_last,
-                                         criteria=criteria)
+                                        parent=displayable_root,
+                                        is_last=is_last,
+                                        criteria=criteria)
             else:
                 yield cls(path, displayable_root, is_last)
             count += 1
@@ -52,8 +52,15 @@ class DisplayablePath(object):
     @property
     def displayname(self):
         if self.path.is_dir():
-            return self.path.name + '/'
-        return self.path.name
+            name = self.path.name
+            if name == "{{cookiecutter.project_slug}}":
+                name = "<project-name>"
+            return name + '/'
+        else:
+            name = self.path.name
+            if name == "{{cookiecutter.project_slug}}":
+                name = "<project-name>"
+            return name
 
     def displayable(self):
         if self.parent is None:

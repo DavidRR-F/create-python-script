@@ -22,12 +22,6 @@
 
 PyPlater is a Python CLI Tool to generate, build, and create boilerplate code for python projects Including linting, formatting, unit testing, and package managing from prebuilt and your own custom templates
 
-# Project Options
-
-|    Templates     |     Testing      | Package Managers |    ORMs    |
-| :--------------: | :--------------: | :--------------: | :--------: |
-| Vanilla, FastAPI | Unittest, PyTest |   PIP, Poetry    | SqlAlchemy |
-
 # Get Setup
 
 ### Install PyPlater
@@ -38,108 +32,74 @@ $ pip install pyplater
 
 # Commands
 
+```
+$ pyplater save ./your_project newTemplate --type template
+```
+
 ## PyPlater Create
 
-![Alt text](image.png)
+[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.mp4)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.mp4)
 
 ### Options
 
 - --name: Project Name
-- --type: Project Template
-- --tester: Unit Testing Library
-- --manager: Package Manager
-- --orm: Database ORM Library
+- --template: Project Template
 
-## Examples
-
-### Create Vanilla Project
+## Example
 
 ```
-$ pyplater create --name your_project --type vanilla --tester unittest --manager pip --orm none
+$ pyplater create --name your_project --type starter
 ```
 
-### File Structure
+## Pyplater Save
 
-```
-your_project/
-    ├── your_project/
-        ├── test/
-            ├── __init__.py
-            └── test.py
-        ├── __init__.py
-        ├── config.py
-        └── main.py
-    ├── .env.example
-    ├── .flake8
-    ├── .gitignore
-    ├── pyproject.toml
-    ├── requirements.txt
-    ├── requirements.dev.txt
-    └── README.md
-```
+Save project directorys as snippets or templates
 
-### Create FastAPI Project
-
-```
-$ pyplater create --name your_project --type fastapi --tester pytest --manager poetry --orm sqlalchemy
-```
-
-### File Structure
-
-```
-your_project/
-    ├── app/
-        ├── router/
-            ├── auth.py
-            ├── post.py
-        ├── db/
-            ├── database.py
-            ├── shcema.py
-            ├── crud.py
-            └── model.py
-        ├── test/
-            ├── __init__.py
-            └── test.py
-        ├── __init__.py
-        ├── config.py
-        └── main.py
-    ├── .env.example
-    ├── .flake8
-    ├── .gitignore
-    ├── pyproject.toml
-    └── README.md
-```
-
-## PyPlater Add
-
-Add subdirectory file structture to the cwd using pyplater
-
-![Alt text](image-1.png)
+[![PyPlater Save](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/save.mp4)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/save.mp4)
 
 ### Options
 
-- [CONTENT]: [tester, manager, orm]
-- --option: Library for the chosen content
+- [Directory]: the directory you with to copy
+- [Name]: the name of the new template/snippet
+- --type: (template, snippet)
+
+## PyPlater Add
+
+Add snippet files to existing projects
+
+[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/add.mp4)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/add.mp4)
+
+### Options
+
+- --snippet: Library for the chosen content
+
+## Starter Snippets
+
+- pytest
+- unittest
+- pip
+- poetry
+- sqlalchemy
+
+## PyPlater View
+
+View all saved snippets/templates or view a specific snippet's/template's file structure
+
+[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.mp4)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/view.mp4)
 
 ## PyPlater Run
 
 Define commands in the pyproject.toml to run your custom scripts with pyplater
 
 ```
-$ pyplater run install
 $ pyplater run script
+$ pyplater run test
 ```
 
 ## pyproject.toml
 
 ```
 [pyplater.scripts]
-script = "poetry run python ./script/main.py"
-install = "poetry install"
+script = "python ./main/script/main.py"
+test = "python -m unittest:discover tests/"
 ```
-
-## Default Library Configuration
-
-- **_Linting:_** Flake8
-- **_Formatting:_** Black
-- **_Enviroment:_** Settings config w/ pydantic

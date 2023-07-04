@@ -10,6 +10,10 @@ from pathlib import Path
 from pyplater.utils.questionary import *
 from pyplater.utils.tree import DisplayablePath
 
+def ignore_files(dir, files):
+    # Return a list of filenames to ignore
+    return ['__pycache__']
+
 def validate_project_name(ctx, param, value):
     pattern = r'^[a-zA-Z0-9_-]+$'
     if value is not None and not re.match(pattern, value):
@@ -43,22 +47,47 @@ def pyplater():
 @pyplater.command()
 @click.argument('dir')
 @click.argument('name')
-@click.option('--type', prompt="type", type=click.Choice(['Template', 'Section'], case_sensitive=False), cls=QuestionaryOption)
+@click.option('--type', prompt="type", type=click.Choice(['Template', 'Snippet'], case_sensitive=False), cls=QuestionaryOption)
 def save(dir: str, name: str, type: str) -> None:
+    replace_string = '{{cookiecutter.project_slug}}'
+    search_string = name
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
     templates_dir = os.path.join(current_script_dir, f'{type.lower()}s')
     os.mkdir(f'{templates_dir}/{name}')
     templates_dir = os.path.join(templates_dir, name)
-    shutil.copytree(dir, f'{templates_dir}/{name}')
+    shutil.copytree(dir, f'{templates_dir}/{name}', ignore=ignore_files)
     if type.lower() == 'template':
         with open(f'{templates_dir}/cookiecutter.json', 'w') as f:
             json.dump({'project_slug': 'default_project'}, f)
-        os.rename(f'{templates_dir}/{name}', templates_dir+'/{{cookiecutter.project_slug}}')
+
+        for root, dirs, files in os.walk(f'{templates_dir}/{name}'):
+
+            for dir in dirs:
+                if dir == search_string:
+                    dir_path = os.path.join(root, dir)
+                    new_dir_name = dir.replace(search_string, replace_string)
+                    new_dir_path = os.path.join(root, new_dir_name)
+
+                    # Rename the directory
+                    os.rename(dir_path, new_dir_path)
+
+            for file in files:
+                file_path = os.path.join(root, file)
+                # Read the file contents
+                with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = f.read()
+                # Perform search and replace
+                modified_content = content.replace(search_string, replace_string)
+                # Write the modified content back to the file
+                with open(file_path, 'w') as f:
+                    f.write(modified_content)
+
+        os.rename(f'{templates_dir}/{name}', f'{templates_dir}/{replace_string}')
     print(f'{name} has been saved as a {type}')
 
 @pyplater.command()
 @click.argument('name')
-@click.option('--type', prompt="type", type=click.Choice(['Template', 'Section'], case_sensitive=False), cls=QuestionaryOption)
+@click.option('--type', prompt="type", type=click.Choice(['Template', 'Snippet'], case_sensitive=False), cls=QuestionaryOption)
 def remove(name: str, type: str) ->  None:
     confirm = questionary.confirm(f"Are you sure you want to delete {name}").ask()
     if confirm:
@@ -90,13 +119,13 @@ def view(content: str, name):
             print("\t"+file)
 
 @pyplater.command()
-@click.option('--struct', prompt='struct', type=click.Choice(get_options('sections'), case_sensitive=False), cls=QuestionaryOption)
-def add(struct):
+@click.option('--snippet', prompt='snippet', type=click.Choice(get_options('snippets'), case_sensitive=False), cls=QuestionaryOption)
+def add(snippet):
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
-    templates_dir = os.path.join(current_script_dir, 'sections')
+    templates_dir = os.path.join(current_script_dir, 'snippets')
     context = {'project_slug': os.path.basename(os.getcwd()) }
 
-    add_supporting_files(f'{templates_dir}/{struct}', context)
+    add_supporting_files(f'{templates_dir}/{snippet}', context)
 
 @pyplater.command()
 @click.option('--name', prompt="Enter Project Name", callback=validate_project_name, is_eager=True, cls=QuestionaryInput)
