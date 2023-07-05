@@ -10,7 +10,7 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-pydantic = "^2.0"
+pydantic-settings = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "6.0.0"
@@ -18,14 +18,14 @@ black = "23.3.0"
 pytest = "7.4.0"
 coverage = "7.2.7"
 
-[tool.poetry.script]
-your_script = "{{cookiecutter.project_slug}}.main:{{cookiecutter.project_slug}}"
+[tool.poetry.scripts]
+script = "{{cookiecutter.project_slug}}.main:main"
 
 [build]
 include = ["{{cookiecutter.project_slug}}/**/*.py"]
 
 [pyplater.scripts]
-script = "poetry run ./{{cookiecutter.project_slug}}/main.py"
+script = "poetry run python run ./{{cookiecutter.project_slug}}/main.py"
 test = "poetry run pytest"
 lint = "poetry run flake8"
 coverage = "poetry run coverage run -m pytest"

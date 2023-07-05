@@ -1,9 +1,9 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     your_secret: str
 
     class Config:
-        env_file = ".env"
+        env_file = ".env.example"
 
 settings = Settings()
