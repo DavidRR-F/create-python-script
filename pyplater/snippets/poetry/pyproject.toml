@@ -10,7 +10,7 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-python-dotenv = "1.0.0"
+pydantic-settings = "^2.0.1"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "6.0.0"
