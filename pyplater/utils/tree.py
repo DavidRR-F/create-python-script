@@ -1,10 +1,11 @@
 from pathlib import Path
 
+
 class DisplayablePath(object):
-    display_filename_prefix_middle = '├──'
-    display_filename_prefix_last = '└──'
-    display_parent_prefix_middle = '    '
-    display_parent_prefix_last = '│   '
+    display_filename_prefix_middle = "├──"
+    display_filename_prefix_last = "└──"
+    display_parent_prefix_middle = "    "
+    display_parent_prefix_last = "│   "
 
     def __init__(self, path, parent_path, is_last):
         self.path = Path(str(path))
@@ -18,7 +19,7 @@ class DisplayablePath(object):
     @property
     def displayname(self):
         if self.path.is_dir():
-            return self.path.name + '/'
+            return self.path.name + "/"
         return self.path.name
 
     @classmethod
@@ -29,18 +30,17 @@ class DisplayablePath(object):
         displayable_root = cls(root, parent, is_last)
         yield displayable_root
 
-        children = sorted(list(path
-                            for path in root.iterdir()
-                            if criteria(path)),
-                        key=lambda s: (not s.is_dir(), str(s).lower()))  # Sort directories first, then files
+        children = sorted(
+            list(path for path in root.iterdir() if criteria(path)),
+            key=lambda s: (not s.is_dir(), str(s).lower()),
+        )  # Sort directories first, then files
         count = 1
         for path in children:
             is_last = count == len(children)
             if path.is_dir():
-                yield from cls.make_tree(path,
-                                        parent=displayable_root,
-                                        is_last=is_last,
-                                        criteria=criteria)
+                yield from cls.make_tree(
+                    path, parent=displayable_root, is_last=is_last, criteria=criteria
+                )
             else:
                 yield cls(path, displayable_root, is_last)
             count += 1
@@ -55,7 +55,7 @@ class DisplayablePath(object):
             name = self.path.name
             if name == "{{cookiecutter.project_slug}}":
                 name = "<project-name>"
-            return name + '/'
+            return name + "/"
         else:
             name = self.path.name
             if name == "{{cookiecutter.project_slug}}":
@@ -66,18 +66,21 @@ class DisplayablePath(object):
         if self.parent is None:
             return self.displayname
 
-        _filename_prefix = (self.display_filename_prefix_last
-                            if self.is_last
-                            else self.display_filename_prefix_middle)
+        _filename_prefix = (
+            self.display_filename_prefix_last
+            if self.is_last
+            else self.display_filename_prefix_middle
+        )
 
-        parts = ['{!s} {!s}'.format(_filename_prefix,
-                                    self.displayname)]
+        parts = ["{!s} {!s}".format(_filename_prefix, self.displayname)]
 
         parent = self.parent
         while parent and parent.parent is not None:
-            parts.append(self.display_parent_prefix_middle
-                         if parent.is_last
-                         else self.display_parent_prefix_last)
+            parts.append(
+                self.display_parent_prefix_middle
+                if parent.is_last
+                else self.display_parent_prefix_last
+            )
             parent = parent.parent
 
-        return ''.join(reversed(parts))
+        return "".join(reversed(parts))

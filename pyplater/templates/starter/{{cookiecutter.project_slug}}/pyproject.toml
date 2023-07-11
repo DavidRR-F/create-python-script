@@ -24,6 +24,14 @@ script = "{{cookiecutter.project_slug}}.main:main"
 [build]
 include = ["{{cookiecutter.project_slug}}/**/*.py"]
 
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+
+[flake8]
+max-line-length = 88
+
 [pyplater.scripts]
 script = "poetry run python run ./{{cookiecutter.project_slug}}/main.py"
 test = "poetry run pytest"
