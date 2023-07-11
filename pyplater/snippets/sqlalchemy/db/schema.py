@@ -1,6 +1,7 @@
 from typing import Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 import datetime
+
 
 class CreateUser(BaseModel):
     username: str
@@ -8,6 +9,7 @@ class CreateUser(BaseModel):
     first_name: str
     last_name: str
     password: str
+
 
 class Post(BaseModel):
     text: str

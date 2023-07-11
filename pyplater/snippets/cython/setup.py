@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 from Cython.Build import cythonize
+
 # python setup.py build_ext --inplace
 setup(
     name="{{project_slug}}",

@@ -16,12 +16,6 @@ class DisplayablePath(object):
         else:
             self.depth = 0
 
-    @property
-    def displayname(self):
-        if self.path.is_dir():
-            return self.path.name + "/"
-        return self.path.name
-
     @classmethod
     def make_tree(cls, root, parent=None, is_last=False, criteria=None):
         root = Path(str(root))

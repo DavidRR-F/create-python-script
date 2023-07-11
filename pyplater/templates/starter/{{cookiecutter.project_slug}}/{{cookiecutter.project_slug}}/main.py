@@ -1,5 +1,6 @@
 from .config import settings
 
+
 def main():
     print(settings.your_secret)
 

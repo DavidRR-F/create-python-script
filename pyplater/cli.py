@@ -7,8 +7,8 @@ import subprocess
 from cookiecutter.main import cookiecutter
 import click
 from pathlib import Path
-from pyplater.utils.questionary import *
-from pyplater.utils.tree import DisplayablePath
+from .utils.questionary import *
+from .utils.tree import DisplayablePath
 
 
 def ignore_files(dir, files):
@@ -20,7 +20,8 @@ def validate_project_name(ctx, param, value):
     pattern = r"^[a-zA-Z0-9_-]+$"
     if value is not None and not re.match(pattern, value):
         raise click.BadParameter(
-            "Project name must contain only alphanumeric characters, hyphens or underscores."
+            "Project name must contain only alphanumeric \
+                characters, hyphens or underscores."
         )
     return value
 
