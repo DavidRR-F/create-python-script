@@ -37,4 +37,4 @@ line-length = 88
 include = '\.pyi?$'
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+addopts = "--ignore=pyplater/templates --ignore=pyplater/snippets"

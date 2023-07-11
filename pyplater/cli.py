@@ -21,7 +21,7 @@ def validate_project_name(ctx, param, value):
     if value is not None and not re.match(pattern, value):
         raise click.BadParameter(
             "Project name must contain only alphanumeric \
-                characters, hyphens or underscores."
+                characters, hyphens, and underscores."
         )
     return value
 
