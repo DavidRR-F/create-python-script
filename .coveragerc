@@ -1,0 +1,10 @@
+[run]
+omit =
+    pyplater/templates/*
+    pyplater/snippets/*
+
+[report]
+exclude_lines =
+    # pragma: no cover
+    def __str__
+    raise NotImplementedError
