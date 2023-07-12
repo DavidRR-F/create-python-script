@@ -38,11 +38,11 @@ jobs:
         run: |
           poetry run pytest --cov=pyplater
 
-          - name: Check coverage percentage
-          id: coverage
-          run: |
-            COVERAGE_PERCENTAGE=$(poetry run coverage report --fail-under=80 | awk '/TOTAL/ {print substr($4, 1, length($4)-1)}')
-            echo "COVERAGE_PERCENTAGE=${COVERAGE_PERCENTAGE}" >> $GITHUB_ENV
+      - name: Check coverage percentage
+        id: coverage
+        run: |
+          COVERAGE_PERCENTAGE=$(poetry run coverage report --fail-under=80 | awk '/TOTAL/ {print substr($4, 1, length($4)-1)}')
+          echo "COVERAGE_PERCENTAGE=${COVERAGE_PERCENTAGE}" >> $GITHUB_ENV
 
       - name: Check coverage result
         run: |

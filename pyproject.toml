@@ -24,16 +24,16 @@ questionary = "^1.10.0"
 cookiecutter = "^2.2.2"
 toml = "^0.10.2"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"
 black = "^23.7.0"
 pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.11.1"
+pyfakefs = "^5.2.3"
 
 [tool.poetry.scripts]
 pyplater = 'pyplater.cli:pyplater'
-
-[tool.poetry.group.dev.dependencies]
-pytest-cov = "^4.1.0"
 
 [tool.black]
 line-length = 88
