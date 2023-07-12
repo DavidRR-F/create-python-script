@@ -1,0 +1,21 @@
+name: Update Badges
+
+on:
+  workflow_run:
+    workflows: ["deploy"]
+    types:
+      - completed
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check coverage percentage
+        id: coverage
+        run: echo "::set-output name=coverage::$(awk '/^TOTAL/ {print substr($4, 1, length($4)-1)}' htmlcov/index.html)"
+
+      - name: Update badge
+        run: |
+          echo "CODE_COVERAGE=${{ steps.coverage.outputs.coverage }}" >> $GITHUB_ENV
+          echo "Code coverage: ${{ steps.coverage.outputs.coverage }}%"

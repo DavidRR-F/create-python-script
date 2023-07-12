@@ -32,6 +32,9 @@ pytest = "^7.4.0"
 [tool.poetry.scripts]
 pyplater = 'pyplater.cli:pyplater'
 
+[tool.poetry.group.dev.dependencies]
+pytest-cov = "^4.1.0"
+
 [tool.black]
 line-length = 88
 include = '\.pyi?$'
