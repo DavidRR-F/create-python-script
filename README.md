@@ -12,7 +12,7 @@
     <img src="https://img.shields.io/badge/Version-${{ steps.version.outputs.version }}-blue" alt="Package Version">
   </a>
   <a href="link-to-your-workflow">
-    <img src="https://img.shields.io/github/workflow/status/DavidRR-F/pyplater/test?label=Test%20Status" alt="Test Status">
+    <img src="https://img.shields.io/github/workflow/status/DavidRR-F/pyplater/ci?label=Test%20Status" alt="Test Status">
   </a>
   <a href="link-to-coverage-report">
     <img src="https://img.shields.io/badge/Coverage-${{ env.CODE_COVERAGE }}%25-brightgreen" alt="Coverage Status">
