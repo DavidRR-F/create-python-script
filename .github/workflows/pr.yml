@@ -1,11 +1,11 @@
-name: CI Build
+name: Validate PR
 
 on:
-  push:
+  pull_request:
     branches: [main]
 
 jobs:
-  ci:
+  pr:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -43,12 +43,6 @@ jobs:
         id: coverage
         run: |
           poetry run coverage report --fail-under=90
-
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage-report
-          path: .coverage
 
       - name: Check previous version
         id: previous_version

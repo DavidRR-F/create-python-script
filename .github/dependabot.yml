@@ -5,6 +5,7 @@ updates:
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    version: "patch"
     commit-message:
       prefix: "chore(deps): update"
       include: "dependencies"
