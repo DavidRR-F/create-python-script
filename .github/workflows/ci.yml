@@ -29,28 +29,28 @@ jobs:
           pip install poetry
           poetry install
 
-      - name: Format with Black
+      - name: Format Check
         run: |
           poetry run black --check .
 
-      - name: Lint with Flake8
+      - name: Linting
         run: |
           poetry run flake8 .
 
-      - name: Test with pytest
+      - name: Run Tests
         run: |
-          poetry run pytest
+          poetry run pytest --cov=pyplater
 
-      - name: Check coverage percentage
+      - name: Code Coverage Report
         id: coverage
         run: |
           poetry run coverage report --fail-under=90
 
-      - name: Upload coverage report
+      - name: Upload Coverage Report
         uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: ./htmlcov
+          path: .coverage
 
       - name: Check previous version
         id: previous_version
