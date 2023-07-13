@@ -1,4 +1,4 @@
-name: CI Build
+name: CI_Pipeline
 
 on:
   push:
@@ -44,14 +44,7 @@ jobs:
         run: |
           poetry run coverage report --fail-under=90
 
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage-report
-          path: .coverage
-
       - name: Check previous version
-        id: previous_version
         run: |
           PREVIOUS_VERSION=$(git show -s --format=%B | awk '/^Version:/ {print substr($2, 1, length($2)-1)}')
           CURRENT_VERSION=$(poetry version | awk '{print $2}')
@@ -61,3 +54,12 @@ jobs:
           else
             echo "Package version: ${CURRENT_VERSION}"
           fi
+
+      - name: Extract coverage percentage
+        id: extract_coverage
+        run: echo "::set-output name=coverage::$(grep -oP '(?<=TOTAL\s+).*(?=\s+)' coverage_report.txt)"
+
+      - name: Update README.md
+        run: |
+          sed -i "s/{{coverage}}/${{ steps.extract_coverage.outputs.coverage }}/g" README.md
+          sed -i "s/{{color}}/green/g" README.md

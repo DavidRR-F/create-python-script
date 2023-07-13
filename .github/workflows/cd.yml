@@ -1,8 +1,8 @@
-name: Update Badges
+name: CD_Pipeline
 
 on:
   workflow_run:
-    workflows: ["ci"]
+    workflows: ["CI Pipeline"]
     types:
       - completed
 
