@@ -23,7 +23,7 @@ jobs:
 
       - name: Configure Poetry
         run: |
-          poetry config pypi-token.pypi your-api-token
+          poetry config pypi-token.pypi ${{ secrets.PYPI_KEY }}
 
       - name: Install dependencies
         run: |
