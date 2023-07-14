@@ -1,7 +1,7 @@
 name: CI_Pipeline
 
 on:
-  push:
+  pull_request:
     branches: [main]
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          poetry run pytest --cov=pyplater
+          poetry run pytest --cov=pyplater_cli
 
       - name: Code Coverage Report
         id: coverage
@@ -54,12 +54,3 @@ jobs:
           else
             echo "Package version: ${CURRENT_VERSION}"
           fi
-
-      - name: Extract coverage percentage
-        id: extract_coverage
-        run: echo "::set-output name=coverage::$(grep -oP '(?<=TOTAL\s+).*(?=\s+)' coverage_report.txt)"
-
-      - name: Update README.md
-        run: |
-          sed -i "s/{{coverage}}/${{ steps.extract_coverage.outputs.coverage }}/g" README.md
-          sed -i "s/{{color}}/green/g" README.md

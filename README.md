@@ -6,13 +6,13 @@
 
 <div align="center">
   <a href="link-to-your-repository">
-    <img src="https://img.shields.io/badge/Python-v3.8.1%2B-brightgreen" alt="Python Version">
+    <img src="https://img.shields.io/badge/Python-v3.10%2B-brightgreen" alt="Python Version">
   </a>
   <a href="link-to-your-repository">
     <img src="https://img.shields.io/pypi/v/pyplater-cli?color=%2334D058&label=pypi%20package" alt="Package Version">
   </a>
   <a href="https://github.com/DavidRR-F/pyplater/actions/workflows/ci.yml">
-    <img src="https://github.com/DavidRR-F/pyplater/workflows/CI_Pipeline/badge.svg?event=push&branch=main" alt="Test Status">
+    <img src="https://github.com/DavidRR-F/pyplater/workflows/CD_Pipeline/badge.svg?event=push&branch=main" alt="Test Status">
   </a>
 </div>
 PyPlater is a Python CLI Tool to generate, build, and create boilerplate code for python projects Including linting, formatting, unit testing, and package managing from prebuilt and your own custom templates

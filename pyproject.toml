@@ -19,9 +19,9 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-click = "^8.0.3"
+click = "^8.1.5"
 questionary = "^1.10.0"
-cookiecutter = "^2.2.2"
+cookiecutter = "^2.2.3"
 toml = "^0.10.2"
 
 [tool.poetry.group.dev.dependencies]
@@ -33,7 +33,7 @@ pytest-mock = "^3.11.1"
 pyfakefs = "^5.2.3"
 
 [tool.poetry.scripts]
-pyplater = 'pyplater-cli.cli:pyplater'
+pyplater = 'pyplater_cli.cli:pyplater'
 
 [tool.black]
 line-length = 88
