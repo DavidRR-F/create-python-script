@@ -2,22 +2,37 @@ name: CD_Pipeline
 
 on:
   workflow_run:
-    workflows: ["CI Pipeline"]
+    workflows: ["CI_Pipeline"]
     types:
       - completed
 
 jobs:
   cd:
     runs-on: ubuntu-latest
-
     steps:
-      - name: in Progress
-        run: echo "Hold up im working on it"
-      # - name: Check coverage percentage
-      #   id: coverage
-      #   run: echo "::set-output name=coverage::$(awk '/^TOTAL/ {print substr($4, 1, length($4)-1)}' .coverage/index.html)"
+      - uses: actions/checkout@v2
 
-      # - name: Update badge
-      #   run: |
-      #     echo "CODE_COVERAGE=${{ steps.coverage.outputs.coverage }}" >> $GITHUB_ENV
-      #     echo "Code coverage: ${{ steps.coverage.outputs.coverage }}%"
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Configure Poetry
+        run: |
+          poetry config pypi-token.pypi your-api-token
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Build package
+        run: |
+          poetry build
+
+      - name: Publish package
+        run: |
+          poetry publish

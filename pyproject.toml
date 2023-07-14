@@ -3,7 +3,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "pyplater"
+name = "pyplater-cli"
 version = "0.0.1"
 description = "Create Python Script CLI"
 authors = ["David Rose-Franklin <david.rosefranklin96@gmail.com>"]
