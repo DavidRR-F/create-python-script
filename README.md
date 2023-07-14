@@ -22,7 +22,7 @@ PyPlater is a Python CLI Tool to generate, build, and create boilerplate code fo
 ### Install PyPlater
 
 ```
-$ pip install pyplater
+$ pip install pyplater-cli
 ```
 
 # Commands
