@@ -8,9 +8,9 @@ import subprocess
 from cookiecutter.main import cookiecutter
 import click
 from pathlib import Path
-from .utils.git import Git
-from .utils.questionary import *
-from .utils.tree import DisplayablePath
+from .utils.classes.Git import Git
+from .utils.classes.Questionary import *
+from .utils.classes.DisplayPath import DisplayablePath
 
 
 def ignore_files(dir, files):
@@ -52,6 +52,11 @@ def get_options(name: str) -> list:
 
 @click.group()
 def pyplater():
+    pass
+
+
+@pyplater.group()
+def git():
     pass
 
 
@@ -208,18 +213,7 @@ def run(script_name):
     subprocess.run(command)
 
 
-def repo_exists(username, token, repo_name):
-    url = f"https://api.github.com/repos/{username}/{repo_name}"
-    headers = {
-        "Authorization": f"token {token}",
-        "Accept": "application/vnd.github.v3+json",
-    }
-    response = requests.get(url, headers=headers)
-    return response.status_code == 200
-
-
-@pyplater.command()
-@click.argument("folder")
+@git.command()
 @click.option(
     "--username",
     prompt="Enter GitHub username",
@@ -233,20 +227,33 @@ def repo_exists(username, token, repo_name):
     help="Your GitHub personal access token",
     cls=QuestionaryPassword,
 )
-def export(folder: str, username: str, token: str):
-    """Create a GitHub repository or push to an existing repository."""
-    git = Git(username, token)
-    if not git.repo_exists():
-        created = git.create_repo()
-        if created:
-            click.echo("Repository created successfully!")
-        else:
-            click.echo("Failed to create repository")
-            return
+def init(username: str, token: str):
+    git = Git()
+    git.set_github_user(username)
+    if not git.repo_exists(token):
+        git.create_repo(token)
+    else:
+        click.echo("Repository already exists")
+
+
+@git.command()
+@click.argument("folder")
+def push(folder: str):
+    git = Git()
     if git.push(folder):
         click.echo(f"{folder.title()} has been pushed!")
     else:
         click.echo(f"Failed to push {folder}")
+
+
+@git.command()
+def pull():
+    git = Git()
+    if not git.repo_exists():
+        click.echo(
+            f"https://github.com/{git._get_github_user()}/pyplater-templates does not exist"
+        )
+        return
 
 
 if __name__ == "__main__":

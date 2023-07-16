@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
 import click
-from pyplater_cli.utils.questionary import (
+from pyplater_cli.utils.classes.Questionary import (
     QuestionaryInput,
     QuestionaryConfirm,
     QuestionaryOption,

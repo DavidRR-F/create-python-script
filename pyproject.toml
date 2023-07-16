@@ -34,7 +34,7 @@ pytest-mock = "^3.11.1"
 pyfakefs = "^5.2.3"
 
 [tool.poetry.scripts]
-pyplater = 'pyplater_cli.cli:pyplater'
+pyplater = 'pyplater_cli.main:pyplater'
 
 [tool.black]
 line-length = 88
