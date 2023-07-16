@@ -1,4 +1,4 @@
-from pyplater.utils.tree import DisplayablePath
+from pyplater_cli.utils.tree import DisplayablePath
 from pathlib import Path
 from pyfakefs.fake_filesystem_unittest import TestCase
 

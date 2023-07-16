@@ -1,12 +1,14 @@
 import os
 import re
 import toml
+import requests
 import shutil
 import json
 import subprocess
 from cookiecutter.main import cookiecutter
 import click
 from pathlib import Path
+from .utils.git import Git
 from .utils.questionary import *
 from .utils.tree import DisplayablePath
 
@@ -44,7 +46,7 @@ def add_supporting_files(path, context, root=None):
 
 def get_options(name: str) -> list:
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
-    templates_dir = os.path.join(current_script_dir, name)
+    templates_dir = os.path.join(current_script_dir, f"pyplater-templates/{name}")
     return os.listdir(templates_dir)
 
 
@@ -66,7 +68,9 @@ def save(dir: str, name: str, type: str) -> None:
     replace_string = "{{cookiecutter.project_slug}}"
     search_string = name
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
-    templates_dir = os.path.join(current_script_dir, f"{type.lower()}s")
+    templates_dir = os.path.join(
+        current_script_dir, f"pyplater-templates/{type.lower()}s"
+    )
     os.mkdir(f"{templates_dir}/{name}")
     templates_dir = os.path.join(templates_dir, name)
     shutil.copytree(dir, f"{templates_dir}/{name}", ignore=ignore_files)
@@ -111,7 +115,9 @@ def remove(name: str, type: str) -> None:
     confirm = questionary.confirm(f"Are you sure you want to delete {name}").ask()
     if confirm:
         current_script_dir = os.path.dirname(os.path.abspath(__file__))
-        templates_dir = os.path.join(current_script_dir, f"{type.lower()}s")
+        templates_dir = os.path.join(
+            current_script_dir, f"pyplater-templates/{type.lower()}s"
+        )
         shutil.rmtree(f"{templates_dir}/{name}")
         print(f"{name.title()} deleted")
 
@@ -125,16 +131,21 @@ def view(content: str, name):
         if content == "templates":
             templates_dir = os.path.join(
                 current_script_dir,
-                f"{content}/{name}/" + "{{cookiecutter.project_slug}}",
+                f"pyplater-templates/{content}/{name}/"
+                + "{{cookiecutter.project_slug}}",
             )
         else:
-            templates_dir = os.path.join(current_script_dir, f"{content}/{name}")
+            templates_dir = os.path.join(
+                current_script_dir, f"pyplater-templates/{content}/{name}"
+            )
         paths = DisplayablePath.make_tree(Path(templates_dir))
         for path in paths:
             print(path.displayable())
     else:
         current_script_dir = os.path.dirname(os.path.abspath(__file__))
-        templates_dir = os.path.join(current_script_dir, f"{content}")
+        templates_dir = os.path.join(
+            current_script_dir, f"pyplater-templates/{content}"
+        )
         print(content.title() + ":")
         for file in os.listdir(templates_dir):
             print("\t" + file)
@@ -149,7 +160,7 @@ def view(content: str, name):
 )
 def add(snippet):
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
-    templates_dir = os.path.join(current_script_dir, "snippets")
+    templates_dir = os.path.join(current_script_dir, "pyplater-templates/snippets")
     context = {"project_slug": os.path.basename(os.getcwd())}
 
     add_supporting_files(f"{templates_dir}/{snippet}", context)
@@ -171,7 +182,7 @@ def add(snippet):
 )
 def create(name: str, template: str) -> None:
     current_script_dir = os.path.dirname(os.path.abspath(__file__))
-    templates_dir = os.path.join(current_script_dir, "templates")
+    templates_dir = os.path.join(current_script_dir, "pyplater-templates/templates")
     context = {"project_slug": name}
 
     cookiecutter(
@@ -195,6 +206,47 @@ def run(script_name):
     command: list = script_command.split(" ")
 
     subprocess.run(command)
+
+
+def repo_exists(username, token, repo_name):
+    url = f"https://api.github.com/repos/{username}/{repo_name}"
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json",
+    }
+    response = requests.get(url, headers=headers)
+    return response.status_code == 200
+
+
+@pyplater.command()
+@click.argument("folder")
+@click.option(
+    "--username",
+    prompt="Enter GitHub username",
+    help="Your GitHub username",
+    cls=QuestionaryInput,
+)
+@click.option(
+    "--token",
+    prompt="Enter GitHub personal access token",
+    hide_input=True,
+    help="Your GitHub personal access token",
+    cls=QuestionaryPassword,
+)
+def export(folder: str, username: str, token: str):
+    """Create a GitHub repository or push to an existing repository."""
+    git = Git(username, token)
+    if not git.repo_exists():
+        created = git.create_repo()
+        if created:
+            click.echo("Repository created successfully!")
+        else:
+            click.echo("Failed to create repository")
+            return
+    if git.push(folder):
+        click.echo(f"{folder.title()} has been pushed!")
+    else:
+        click.echo(f"Failed to push {folder}")
 
 
 if __name__ == "__main__":

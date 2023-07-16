@@ -11,6 +11,15 @@ class QuestionaryInput(click.Option):
         return val
 
 
+class QuestionaryPassword(click.Option):
+    def __init__(self, param_decls=None, **attrs):
+        click.Option.__init__(self, param_decls, **attrs)
+
+    def prompt_for_value(self, ctx):
+        val = questionary.password(self.prompt).ask()
+        return val
+
+
 class QuestionaryConfirm(click.Option):
     def __init__(self, param_decls=None, **attrs):
         click.Option.__init__(self, param_decls, **attrs)

@@ -23,6 +23,7 @@ click = "^8.1.5"
 questionary = "^1.10.0"
 cookiecutter = "^2.2.3"
 toml = "^0.10.2"
+requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"

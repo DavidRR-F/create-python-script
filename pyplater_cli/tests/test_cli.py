@@ -1,6 +1,6 @@
 from click.testing import CliRunner
 from unittest import mock
-from pyplater.cli import pyplater
+from pyplater_cli.cli import pyplater
 import shutil
 import pytest
 import os
