@@ -60,7 +60,7 @@ class Git:
             # Initialize the Git repository if Remote does not exist
             if not self._remote_branch_exists():
                 remote_url = (
-                    f"https://github.com/{self._get_github_user()}/{self.repo_name}.git"
+                    f"https://github.com/{self.get_github_user()}/{self.repo_name}.git"
                 )
                 try:
                     subprocess.check_call(
@@ -77,6 +77,21 @@ class Git:
             return True
         except subprocess.CalledProcessError:
             return False
+
+    @check_git_installed
+    def pull(self, folder: str) -> bool:
+        if folder == "all":
+            try:
+                subprocess.check_call(["git", "pull"], cwd=self.repo_path)
+                return True
+            except subprocess.CalledProcessError:
+                return False
+        else:
+            try:
+                subprocess.check_call(["git", "pull", folder], cwd=self.repo_path)
+                return True
+            except subprocess.CalledProcessError:
+                return False
 
     @check_git_installed
     def create_repo(self, token: str) -> bool:
@@ -97,7 +112,7 @@ class Git:
 
     @check_git_installed
     def repo_exists(self, token: str) -> bool:
-        url = f"https://api.github.com/repos/{self._get_github_user()}/{self.repo_name}"
+        url = f"https://api.github.com/repos/{self.get_github_user()}/{self.repo_name}"
         self.headers = {
             "Authorization": f"token {token}",
             "Accept": "application/vnd.github.v3+json",
@@ -128,13 +143,15 @@ class Git:
     def set_github_user(self, username: str) -> None:
         config = configparser.ConfigParser()
         config.read(self.config_path)
-        config["GitHub"]["User"] = username
-
+        config["GitHub"] = {"username": username}
         with open(self.config_path, "w") as configfile:
             config.write(configfile)
 
-    def _get_github_user(self) -> str:
-        config = configparser.ConfigParser()
-        config.read(self.config_path)
-        username = config.get("GitHub", "User")
+    def get_github_user(self) -> str | bool:
+        try:
+            config = configparser.ConfigParser()
+            config.read(self.config_path)
+            username = config.get("GitHub", "username")
+        except configparser.NoSectionError:
+            return False
         return username

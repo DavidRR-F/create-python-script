@@ -1,5 +1,6 @@
 from .base import pyplater
 from ..utils import *
+import questionary
 import click
 
 
@@ -33,24 +34,49 @@ def init(username: str, token: str):
 
 @git.command()
 @click.argument("folder")
-def push(folder: str):
+def push(folder: str) -> None:
     git = Git()
-    if git.push(folder):
-        click.echo(f"{folder.title()} has been pushed!")
-    else:
-        click.echo(f"Failed to push {folder}")
-
-
-@git.command()
-def pull():
-    git = Git()
-    if not git.repo_exists():
-        click.echo(
-            f"https://github.com/{git._get_github_user()}/pyplater-templates does not exist"
-        )
+    # Check that repository has been initialized
+    if not git.get_github_user():
+        click.echo("User not initialized use command pyplater git init")
         return
+    checked = True
+    # if folder == "all": prompt for confirmation
+    if folder == "all":
+        checked = questionary.confirm(
+            "Are you sure you want to push all folders?"
+        ).ask()
+    if checked:
+        if git.push(folder):
+            click.echo(f"{folder.title()} has been pushed")
+        else:
+            click.echo(f"Failed to push {folder}")
 
 
 @git.command()
-def clone():
-    print("Working on this")
+@click.argument("folder")
+@click.option(
+    "-t",
+    "--type",
+    prompt="type",
+    help="template or snippet",
+    type=click.Choice(["snippet", "template"], case_sensitive=False),
+    cls=QuestionaryOption,
+)
+def pull(folder: str, type: str) -> None:
+    git = Git()
+    # Check that repository has been initialized
+    if not git.get_github_user():
+        click.echo("User not initialized use pyplater git init")
+        return
+    checked = True
+    # if folder == "all": prompt for confirmation
+    if folder == "all":
+        checked = questionary.confirm(
+            "Are you sure you want to pull all folders?"
+        ).ask()
+    if checked:
+        if git.pull(f"{type}/{folder}"):
+            click.echo(f"{type.title()} {folder.title()} has been pulled")
+        else:
+            click.echo(f"Failed to pull {folder}")
