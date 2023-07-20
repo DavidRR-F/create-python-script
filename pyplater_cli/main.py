@@ -1,6 +1,5 @@
 from .groups.base import pyplater
 from .groups.delete import delete
-from .groups.edit import edit
 from .groups.git import git
 from .groups.insert import insert
 from .groups.save import save
@@ -13,7 +12,6 @@ import toml
 pyplater.add_command(git)
 pyplater.add_command(insert)
 pyplater.add_command(delete)
-pyplater.add_command(edit)
 pyplater.add_command(save)
 pyplater.add_command(view)
 

@@ -1,7 +1,6 @@
 from .base import pyplater
 from ..utils import *
 import shutil
-import json
 
 
 @pyplater.group()
@@ -16,7 +15,7 @@ def snippet(dir: str, name: str) -> None:
     os.mkdir(f"{SNIPPET_PATH}/{name}")
     base_dir = os.path.join(SNIPPET_PATH, name)
     shutil.copytree(dir, f"{base_dir}/{name}", ignore=ignore_files)
-    print(f"{name} has been saved as a {type}")
+    print(f"{name} has been saved")
 
 
 @save.command()
@@ -30,4 +29,4 @@ def template(dir: str, name: str) -> None:
     templates_dir = os.path.join(TEMPLATE_PATH, name)
     shutil.copytree(dir, f"{templates_dir}/{name}", ignore=ignore_files)
     format_template(name, templates_dir, replace_string, search_string)
-    print(f"{name} has been saved as a {type}")
+    print(f"{name} has been saved")

@@ -1,6 +1,7 @@
 from .base import pyplater
 from ..utils import *
-import cookiecutter
+
+from cookiecutter.main import cookiecutter
 import click
 
 
