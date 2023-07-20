@@ -4,6 +4,7 @@ from .groups.git import git
 from .groups.insert import insert
 from .groups.save import save
 from .groups.view import view
+from .groups.edit import edit
 
 import subprocess
 import click
@@ -14,6 +15,7 @@ pyplater.add_command(insert)
 pyplater.add_command(delete)
 pyplater.add_command(save)
 pyplater.add_command(view)
+pyplater.add_command(edit)
 
 
 @pyplater.command()

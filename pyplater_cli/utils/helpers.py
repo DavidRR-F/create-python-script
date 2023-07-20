@@ -20,6 +20,10 @@ def validate_project_name(ctx, param, value):
     return value
 
 
+def file_exists(path):
+    return os.path.isfile(path)
+
+
 def add_supporting_files(path, context, root=None):
     for file in os.listdir(path):
         if os.path.isdir(os.path.join(path, file)):
