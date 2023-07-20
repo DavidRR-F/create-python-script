@@ -42,3 +42,6 @@ include = '\.pyi?$'
 
 [tool.pytest.ini_options]
 addopts = "--ignore=pyplater/templates --ignore=pyplater/snippets"
+
+[pyplater.scripts]
+test = "echo 'test'"
