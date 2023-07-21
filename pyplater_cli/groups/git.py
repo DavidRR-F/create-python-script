@@ -11,12 +11,14 @@ def git():
 
 @git.command()
 @click.option(
+    "-u",
     "--username",
     prompt="Enter GitHub username",
     help="Your GitHub username",
     cls=QuestionaryInput,
 )
 @click.option(
+    "-t",
     "--token",
     prompt="Enter GitHub personal access token",
     hide_input=True,
