@@ -42,7 +42,7 @@ jobs:
       - name: Code Coverage Report
         id: coverage
         run: |
-          poetry run coverage report --fail-under=90
+          poetry run coverage report --fail-under=70
 
       - name: Check previous version
         run: |

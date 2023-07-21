@@ -1,7 +1,7 @@
 [run]
 omit =
-    pyplater/templates/*
-    pyplater/snippets/*
+    pyplater_cli/pyplater-templates/templates/*
+    pyplater_cli/pyplater-templates/snippets/*
 
 [report]
 exclude_lines =

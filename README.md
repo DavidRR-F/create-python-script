@@ -27,20 +27,10 @@ $ pip install pyplater-cli
 
 # Commands
 
-## PyPlater Create
+PyPlater CLI supports two templating types:
 
-[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/create.gif)
-
-### Options
-
-- --name: Project Name
-- --template: Project Template
-
-### Example
-
-```
-$ pyplater create --name your_project --type starter
-```
+- template: a project file structure using the cookiecutter library
+- snippet: a small directory literal for commonly used modules
 
 ## Pyplater Save
 
@@ -50,39 +40,88 @@ Save project directorys as snippets or templates
 
 ### Options
 
-- [Directory]: the directory you with to copy
-- [Name]: the name of the new template/snippet
-- --type: (template, snippet)
+- Type: template/snippet
+- Directory: the directory you with to copy
+- Name: the name of the new template/snippet
 
 ### Example
 
+Save a template
+
 ```
-$ pyplater save ./your_project newTemplate --type template
+$ pyplater save template path/to/folder <name>
 ```
 
-## PyPlater Add
+Save a snippet
 
-Add snippet files to existing projects
+```
+$ pyplater save snippet path/to/folder <name>
+```
 
-[![PyPlater Create](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/add.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/add.gif)
+## PyPlater Insert
+
+Add snippet files to existing projects or generate not template project
+
+[![PyPlater Insert](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/insert.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/insert.gif)
 
 ### Options
 
-- --snippet: Library for the chosen content
+- Type: template/snippet
+- -n/--name: namee of template/snippet
 
 ### Example
 
+Insert a template
+
 ```
-$ pyplater add --snippet pytest
+$ pyplater insert template -n <custom_name> -t <saved_template>
 ```
 
-### Starter Snippets
+Insert a snippet
 
-- pytest
-- unittest
-- pip
-- poetry
-- sqlalchemy
+```
+$ pyplater insert snippet -n <saved_snippet>
+```
+
+## PyPlater Git
+
+Initialize a git repository to hold your templates/snippets that you can then push an pull from
+
+[![PyPlater Git](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/git.gif)](https://davidrr-f.github.io/codepen-hosted-assets/pyplater/git.gif)
+
+### Options
+
+- Actions: push/pull
+- Options: template/snippet
+- -n/--name: template/snippet name
+
+### Examples
+
+Initialize Git Repository (Personal access token is not stored)
+
+```
+$ pyplater git init -u <github_username> -t <personal_access_token>
+```
+
+Push templates to repository
+
+```
+$ pyplater git push all
+
+or
+
+$ pyplater git push snippet -n <snippet_name>
+```
+
+Pull templates from repository
+
+```
+$ pyplater pull all
+
+or
+
+$ pyplater pull snippet <snippet_name>
+```
 
 ## PyPlater View
 
@@ -101,6 +140,21 @@ View all saved snippets/templates or view a specific snippet's/template's file s
 $ pyplater view snippets
 
 $ pyplater view templates --name your_project
+```
+
+## PyPlater Edit
+
+Open your template and snippets in vs code
+
+### Options
+
+- Types: template/snippet
+- -n/--name: name of template or snippet
+
+### Examples
+
+```
+$ pyplater edit snippet -n <name>
 ```
 
 ## PyPlater Run

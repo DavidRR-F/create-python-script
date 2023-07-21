@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pyplater-cli"
-version = "0.0.1"
+version = "1.0.0"
 description = "Create Python Script CLI"
 authors = ["David Rose-Franklin <david.rosefranklin96@gmail.com>"]
 license = "MIT"
@@ -23,6 +23,7 @@ click = "^8.1.5"
 questionary = "^1.10.0"
 cookiecutter = "^2.2.3"
 toml = "^0.10.2"
+requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"
@@ -33,7 +34,7 @@ pytest-mock = "^3.11.1"
 pyfakefs = "^5.2.3"
 
 [tool.poetry.scripts]
-pyplater = 'pyplater_cli.cli:pyplater'
+pyplater = 'pyplater_cli.main:pyplater'
 
 [tool.black]
 line-length = 88
@@ -41,3 +42,6 @@ include = '\.pyi?$'
 
 [tool.pytest.ini_options]
 addopts = "--ignore=pyplater/templates --ignore=pyplater/snippets"
+
+[pyplater.scripts]
+test = "echo 'test'"
