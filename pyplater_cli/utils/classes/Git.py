@@ -1,3 +1,4 @@
+from ..constants import *
 import requests
 import subprocess
 import configparser
@@ -26,10 +27,7 @@ def check_git_installed(func):
 class Git:
     def __init__(self):
         self.repo_name = "pyplater-templates"
-        self.repo_path = os.path.join(
-            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            "pyplater-templates",
-        )
+        self.repo_path = BASE_PATH
         self.config_path = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "config.ini"
         )
@@ -88,7 +86,10 @@ class Git:
                 return False
         else:
             try:
-                subprocess.check_call(["git", "pull", folder], cwd=self.repo_path)
+                subprocess.check_call(
+                    ["git", "checkout", "origin/main", "--", f"{folder}"],
+                    cwd=self.repo_path,
+                )
                 return True
             except subprocess.CalledProcessError:
                 return False

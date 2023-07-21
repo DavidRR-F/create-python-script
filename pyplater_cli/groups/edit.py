@@ -19,7 +19,7 @@ def edit():
     cls=QuestionaryOption,
 )
 def snippet(name: str) -> None:
-    if not file_exists(f"{SNIPPET_PATH}/{name}"):
+    if not file_exists(os.path.join(SNIPPET_PATH, name)):
         click.echo(f"{name} does not exist.")
         return
     command = f"code {SNIPPET_PATH}/{name}"

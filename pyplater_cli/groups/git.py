@@ -32,38 +32,74 @@ def init(username: str, token: str):
         click.echo("Repository already exists")
 
 
-@git.command()
-@click.argument("folder")
-def push(folder: str) -> None:
+@git.group()
+def push():
+    pass
+
+
+@push.command()
+def all():
     git = Git()
     # Check that repository has been initialized
     if not git.get_github_user():
         click.echo("User not initialized use command pyplater git init")
         return
     checked = True
-    # if folder == "all": prompt for confirmation
-    if folder == "all":
-        checked = questionary.confirm(
-            "Are you sure you want to push all folders?"
-        ).ask()
+    checked = questionary.confirm("Are you sure you want to push all folders?").ask()
     if checked:
-        if git.push(folder):
-            click.echo(f"{folder.title()} has been pushed")
+        if git.push("all"):
+            click.echo(f"All have been pushed")
         else:
-            click.echo(f"Failed to push {folder}")
+            click.echo(f"Failed to push")
 
 
-@git.command()
-@click.argument("folder")
+@push.command()
 @click.option(
-    "-t",
-    "--type",
-    prompt="type",
-    help="template or snippet",
-    type=click.Choice(["snippet", "template"], case_sensitive=False),
+    "-n",
+    "--name",
+    prompt="snippet",
+    help="Name of the snippet",
+    type=click.Choice(get_options("snippets"), case_sensitive=False),
     cls=QuestionaryOption,
 )
-def pull(folder: str, type: str) -> None:
+def snippet(name: str) -> None:
+    git = Git()
+    if not git.get_github_user():
+        click.echo("User not initialized use pyplater git init")
+        return
+    if git.push(f"snippets/{name}"):
+        click.echo(f"{name} has been pushed")
+    else:
+        click.echo(f"Failed to push")
+
+
+@push.command()
+@click.option(
+    "-n",
+    "--name",
+    prompt="template",
+    help="Name of the template",
+    type=click.Choice(get_options("templates"), case_sensitive=False),
+    cls=QuestionaryOption,
+)
+def template(name: str) -> None:
+    git = Git()
+    if not git.get_github_user():
+        click.echo("User not initialized use pyplater git init")
+        return
+    if git.push(f"templates/{name}"):
+        click.echo(f"{name} has been pushed")
+    else:
+        click.echo(f"Failed to push")
+
+
+@git.group()
+def pull():
+    pass
+
+
+@pull.command()
+def all():
     git = Git()
     # Check that repository has been initialized
     if not git.get_github_user():
@@ -71,12 +107,35 @@ def pull(folder: str, type: str) -> None:
         return
     checked = True
     # if folder == "all": prompt for confirmation
-    if folder == "all":
-        checked = questionary.confirm(
-            "Are you sure you want to pull all folders?"
-        ).ask()
+    checked = questionary.confirm("Are you sure you want to pull all folders?").ask()
     if checked:
-        if git.pull(f"{type}/{folder}"):
-            click.echo(f"{type.title()} {folder.title()} has been pulled")
+        if git.pull("all"):
+            click.echo(f"All has been pulled")
         else:
-            click.echo(f"Failed to pull {folder}")
+            click.echo(f"Failed to pull")
+
+
+@pull.command()
+@click.argument("name")
+def snippet(name: str) -> None:
+    git = Git()
+    if not git.get_github_user():
+        click.echo("User not initialized use pyplater git init")
+        return
+    if git.pull(f"snippets/{name}"):
+        click.echo(f"{name} has been pulled")
+    else:
+        click.echo(f"Failed to pull")
+
+
+@pull.command()
+@click.argument("name")
+def template(name: str) -> None:
+    git = Git()
+    if not git.get_github_user():
+        click.echo("User not initialized use pyplater git init")
+        return
+    if git.pull(f"templates/{name}"):
+        click.echo(f"{name} has been pulled")
+    else:
+        click.echo(f"Failed to pull")

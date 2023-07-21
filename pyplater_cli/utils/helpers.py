@@ -21,7 +21,7 @@ def validate_project_name(ctx, param, value):
 
 
 def file_exists(path):
-    return os.path.isfile(path)
+    return os.path.exists(path)
 
 
 def add_supporting_files(path, context, root=None):
