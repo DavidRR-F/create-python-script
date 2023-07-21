@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pyplater-cli"
-version = "0.0.1"
+version = "1.0.0"
 description = "Create Python Script CLI"
 authors = ["David Rose-Franklin <david.rosefranklin96@gmail.com>"]
 license = "MIT"
