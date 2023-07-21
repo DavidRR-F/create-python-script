@@ -50,9 +50,9 @@ def all():
     checked = questionary.confirm("Are you sure you want to push all folders?").ask()
     if checked:
         if git.push("all"):
-            click.echo(f"All have been pushed")
+            click.echo("All have been pushed")
         else:
-            click.echo(f"Failed to push")
+            click.echo("Failed to push")
 
 
 @push.command()
@@ -72,7 +72,7 @@ def snippet(name: str) -> None:
     if git.push(f"snippets/{name}"):
         click.echo(f"{name} has been pushed")
     else:
-        click.echo(f"Failed to push")
+        click.echo("Failed to push")
 
 
 @push.command()
@@ -92,7 +92,7 @@ def template(name: str) -> None:
     if git.push(f"templates/{name}"):
         click.echo(f"{name} has been pushed")
     else:
-        click.echo(f"Failed to push")
+        click.echo("Failed to push")
 
 
 @git.group()
@@ -112,9 +112,9 @@ def all():
     checked = questionary.confirm("Are you sure you want to pull all folders?").ask()
     if checked:
         if git.pull("all"):
-            click.echo(f"All has been pulled")
+            click.echo("All has been pulled")
         else:
-            click.echo(f"Failed to pull")
+            click.echo("Failed to pull")
 
 
 @pull.command()
@@ -127,7 +127,7 @@ def snippet(name: str) -> None:
     if git.pull(f"snippets/{name}"):
         click.echo(f"{name} has been pulled")
     else:
-        click.echo(f"Failed to pull")
+        click.echo("Failed to pull")
 
 
 @pull.command()
@@ -140,4 +140,4 @@ def template(name: str) -> None:
     if git.pull(f"templates/{name}"):
         click.echo(f"{name} has been pulled")
     else:
-        click.echo(f"Failed to pull")
+        click.echo("Failed to pull")

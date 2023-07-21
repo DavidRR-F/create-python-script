@@ -17,9 +17,7 @@ def check_git_installed(func):
             )
             return func(*args, **kwargs)
         except subprocess.CalledProcessError:
-            click.echo(
-                "Git is not installed or not available. Please install Git to use this command."
-            )
+            click.echo("Git is not installed or not available")
 
     return wrapper
 
@@ -96,7 +94,7 @@ class Git:
 
     @check_git_installed
     def create_repo(self, token: str) -> bool:
-        create_url = f"https://api.github.com/user/repos"
+        create_url = "https://api.github.com/user/repos"
         self.headers = {
             "Authorization": f"token {token}",
             "Accept": "application/vnd.github.v3+json",
