@@ -9,14 +9,14 @@ def view():
     pass
 
 
-@view.command()
+@view.command(help="List currently saved snippets.")
 def snippets():
     print("Snippets:")
     for file in os.listdir(SNIPPET_PATH):
         print("\t" + file)
 
 
-@view.command()
+@view.command(help="View file structure a currently saved snippet.")
 @click.option(
     "-n",
     "--name",
@@ -31,14 +31,14 @@ def snippet(name: str):
         print(path.displayable())
 
 
-@view.command()
+@view.command(help="List currently saved templates.")
 def templates():
     print("Templates:")
     for file in os.listdir(TEMPLATE_PATH):
         print("\t" + file)
 
 
-@view.command()
+@view.command(help="View file structure a currently saved template.")
 @click.option(
     "-n",
     "--name",

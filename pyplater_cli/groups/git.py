@@ -9,7 +9,7 @@ def git():
     pass
 
 
-@git.command()
+@git.command(help="Initialize repository")
 @click.option(
     "-u",
     "--username",
@@ -39,7 +39,7 @@ def push():
     pass
 
 
-@push.command()
+@push.command(help="Push all folders")
 def all():
     git = Git()
     # Check that repository has been initialized
@@ -55,7 +55,7 @@ def all():
             click.echo("Failed to push")
 
 
-@push.command()
+@push.command(help="Push specified a snippet folder")
 @click.option(
     "-n",
     "--name",
@@ -75,7 +75,7 @@ def snippet(name: str) -> None:
         click.echo("Failed to push")
 
 
-@push.command()
+@push.command(help="Push specified a template folder")
 @click.option(
     "-n",
     "--name",
@@ -100,7 +100,7 @@ def pull():
     pass
 
 
-@pull.command()
+@pull.command(help="Pull all folders")
 def all():
     git = Git()
     # Check that repository has been initialized
@@ -117,7 +117,7 @@ def all():
             click.echo("Failed to pull")
 
 
-@pull.command()
+@pull.command(help="Pull specified a snippet folder")
 @click.argument("name")
 def snippet(name: str) -> None:
     git = Git()
@@ -130,7 +130,7 @@ def snippet(name: str) -> None:
         click.echo("Failed to pull")
 
 
-@pull.command()
+@pull.command(help="Pull specified a template folder")
 @click.argument("name")
 def template(name: str) -> None:
     git = Git()

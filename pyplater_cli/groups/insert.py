@@ -10,7 +10,7 @@ def insert():
     pass
 
 
-@insert.command()
+@insert.command(help="Insert a snippet to current directory")
 @click.option(
     "-n",
     "--name",
@@ -24,7 +24,7 @@ def snippet(name: str) -> None:
     add_supporting_files(f"{SNIPPET_PATH}/{name.lower()}", context)
 
 
-@insert.command()
+@insert.command(help="Insert a template to current directory")
 @click.option(
     "-n",
     "--name",

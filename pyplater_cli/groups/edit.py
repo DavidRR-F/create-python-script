@@ -9,7 +9,7 @@ def edit():
     pass
 
 
-@edit.command()
+@edit.command(help="Open a snippet in vscode by name.")
 @click.option(
     "-n",
     "--name",
@@ -29,7 +29,7 @@ def snippet(name: str) -> None:
         print("Visual Studio is not installed or the command is incorrect.")
 
 
-@edit.command()
+@edit.command(help="Open a template in vscode by name.")
 @click.option(
     "-n",
     "--name",

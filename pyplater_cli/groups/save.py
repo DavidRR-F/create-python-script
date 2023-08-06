@@ -8,7 +8,7 @@ def save():
     pass
 
 
-@save.command()
+@save.command(help="Save a directory as a snippet.")
 @click.argument("dir")
 @click.argument("name")
 def snippet(dir: str, name: str) -> None:
@@ -18,7 +18,7 @@ def snippet(dir: str, name: str) -> None:
     print(f"{name} has been saved")
 
 
-@save.command()
+@save.command(help="Save a directory as a template.")
 @click.argument("dir")
 @click.argument("name")
 def template(dir: str, name: str) -> None:
